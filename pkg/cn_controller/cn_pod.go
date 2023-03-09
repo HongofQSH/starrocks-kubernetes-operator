@@ -33,7 +33,7 @@ const (
 	env_cn_config_path = "CONFIGMAP_MOUNT_PATH"
 )
 
-//cnPodLabels
+// cnPodLabels
 func (cc *CnController) cnPodLabels(src *v1alpha12.StarRocksCluster, ownerReferenceName string) rutils.Labels {
 	labels := rutils.Labels{}
 	labels[v1alpha12.OwnerReference] = ownerReferenceName
@@ -42,7 +42,7 @@ func (cc *CnController) cnPodLabels(src *v1alpha12.StarRocksCluster, ownerRefere
 	return labels
 }
 
-//buildPodTemplate construct the podTemplate for deploy cn.
+// buildPodTemplate construct the podTemplate for deploy cn.
 func (cc *CnController) buildPodTemplate(src *v1alpha12.StarRocksCluster, cnconfig map[string]interface{}) corev1.PodTemplateSpec {
 	metaname := src.Name + "-" + v1alpha12.DEFAULT_CN
 	cnSpec := src.Spec.StarRocksCnSpec

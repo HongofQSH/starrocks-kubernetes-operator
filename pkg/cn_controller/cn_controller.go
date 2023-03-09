@@ -261,7 +261,7 @@ func (cc *CnController) ClearResources(ctx context.Context, src *v1alpha12.StarR
 	return false, nil
 }
 
-//updateCnStatus update the src status about cn status.
+// updateCnStatus update the src status about cn status.
 func (cc *CnController) updateCnStatus(cs *v1alpha12.StarRocksCnStatus, st appv1.StatefulSet) error {
 	var podList corev1.PodList
 	if err := cc.k8sclient.List(context.Background(), &podList, client.InNamespace(st.Namespace), client.MatchingLabels(st.Spec.Selector.MatchLabels)); err != nil {
@@ -326,7 +326,7 @@ func (cc *CnController) getFeConfig(ctx context.Context, feconfigMapInfo *v1alph
 	return res, err
 }
 
-//getCnDomainService get the cn service name for dns resolve.
+// getCnDomainService get the cn service name for dns resolve.
 func (cc *CnController) getCnSearchService() string {
 	return "cn-domain-search"
 }

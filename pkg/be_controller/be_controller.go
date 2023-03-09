@@ -176,7 +176,7 @@ func (be *BeController) getFeConfig(ctx context.Context, feconfigMapInfo *v1alph
 	return res, err
 }
 
-//updateCnStatus update the src status about cn status.
+// updateCnStatus update the src status about cn status.
 func (be *BeController) updateBeStatus(bs *v1alpha12.StarRocksBeStatus, st appv1.StatefulSet) error {
 	var podList corev1.PodList
 	if err := be.k8sclient.List(context.Background(), &podList, client.InNamespace(st.Namespace), client.MatchingLabels(st.Spec.Selector.MatchLabels)); err != nil {
@@ -270,7 +270,7 @@ func (be *BeController) ClearResources(ctx context.Context, src *v1alpha12.StarR
 	return true, nil
 }
 
-//getCnDomainService get the cn service name for dns resolve.
+// getCnDomainService get the cn service name for dns resolve.
 func (be *BeController) getBeSearchService() string {
 	return "be-domain-search"
 }

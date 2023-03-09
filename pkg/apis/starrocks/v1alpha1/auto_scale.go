@@ -20,7 +20,7 @@ import (
 	v2beta2 "k8s.io/api/autoscaling/v2beta2"
 )
 
-//AutoScalingPolicy defines the auto scale
+// AutoScalingPolicy defines the auto scale
 type AutoScalingPolicy struct {
 	//the policy of cn autoscale. operator use autoscaling v2.
 	HPAPolicy *HPAPolicy `json:"hpaPolicy,omitempty"`
@@ -34,7 +34,6 @@ type AutoScalingPolicy struct {
 	MaxReplicas int32 `json:"maxReplicas"`
 }
 
-//
 type HPAPolicy struct {
 	// +optional
 	// Metrics specifies how to scale based on a single metric

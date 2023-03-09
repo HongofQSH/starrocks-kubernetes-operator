@@ -192,7 +192,7 @@ func (r *StarRocksClusterReconciler) SetupWithManager(mgr ctrl.Manager) error {
 		Complete(r)
 }
 
-//Init initial the StarRocksClusterReconciler for reconcile.
+// Init initial the StarRocksClusterReconciler for reconcile.
 func (r *StarRocksClusterReconciler) Init(mgr ctrl.Manager) {
 	subcs := make(map[string]SubController)
 	fc := fe_controller.New(mgr.GetClient(), mgr.GetEventRecorderFor(feControllerName))
@@ -212,7 +212,7 @@ func (r *StarRocksClusterReconciler) Init(mgr ctrl.Manager) {
 	}
 }
 
-//CleanSubResources clean all sub resources ownerreference to src.
+// CleanSubResources clean all sub resources ownerreference to src.
 func (r *StarRocksClusterReconciler) CleanSubResources(ctx context.Context, src *srapi.StarRocksCluster) error {
 	for _, c := range r.Scs {
 		if _, err := c.ClearResources(ctx, src); err != nil {

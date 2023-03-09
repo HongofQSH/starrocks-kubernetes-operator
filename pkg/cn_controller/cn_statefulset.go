@@ -38,7 +38,7 @@ func cnStatefulSetName(src *v1alpha12.StarRocksCluster) string {
 	return stname
 }
 
-//buildStatefulSetParams generate the params of construct the statefulset.
+// buildStatefulSetParams generate the params of construct the statefulset.
 func (cc *CnController) buildStatefulSetParams(src *v1alpha12.StarRocksCluster, cnconfig map[string]interface{}) rutils.StatefulSetParams {
 	cnSpec := src.Spec.StarRocksCnSpec
 	or := metav1.NewControllerRef(src, src.GroupVersionKind())

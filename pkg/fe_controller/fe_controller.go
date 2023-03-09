@@ -38,7 +38,7 @@ type FeController struct {
 	feConfig    map[string]interface{}
 }
 
-//New construct a FeController.
+// New construct a FeController.
 func New(k8sclient client.Client, k8sRecorder record.EventRecorder) *FeController {
 	return &FeController{
 		k8sclient:   k8sclient,
@@ -46,7 +46,7 @@ func New(k8sclient client.Client, k8sRecorder record.EventRecorder) *FeControlle
 	}
 }
 
-//Sync starRocksCluster spec to fe statefulset and service.
+// Sync starRocksCluster spec to fe statefulset and service.
 func (fc *FeController) Sync(ctx context.Context, src *v1alpha12.StarRocksCluster) error {
 	if src.Spec.StarRocksFeSpec == nil {
 		klog.Info("FeController Sync ", "the fe component is not needed ", "namespace ", src.Namespace, " starrocks cluster name ", src.Name)
@@ -102,7 +102,7 @@ func (fc *FeController) Sync(ctx context.Context, src *v1alpha12.StarRocksCluste
 	return fc.updateFeStatus(fs, st)
 }
 
-//UpdateFeStatus update the starrockscluster fe status.
+// UpdateFeStatus update the starrockscluster fe status.
 func (fc *FeController) updateFeStatus(fs *v1alpha12.StarRocksFeStatus, st appv1.StatefulSet) error {
 	var podList corev1.PodList
 	if err := fc.k8sclient.List(context.Background(), &podList, client.InNamespace(st.Namespace), client.MatchingLabels(st.Spec.Selector.MatchLabels)); err != nil {
@@ -139,7 +139,7 @@ func (fc *FeController) updateFeStatus(fs *v1alpha12.StarRocksFeStatus, st appv1
 	return nil
 }
 
-//GetFeConfig get the fe start config.
+// GetFeConfig get the fe start config.
 func (fc *FeController) GetFeConfig(ctx context.Context, configMapInfo *v1alpha12.ConfigMapInfo, namespace string) (map[string]interface{}, error) {
 	if configMapInfo.ConfigMapName == "" || configMapInfo.ResolveKey == "" {
 		return make(map[string]interface{}), nil
@@ -154,7 +154,7 @@ func (fc *FeController) GetFeConfig(ctx context.Context, configMapInfo *v1alpha1
 	return res, err
 }
 
-//ClearResources clear resource about fe.
+// ClearResources clear resource about fe.
 func (fc *FeController) ClearResources(ctx context.Context, src *v1alpha12.StarRocksCluster) (bool, error) {
 	//if the starrocks is not have fe.
 	if src.Status.StarRocksFeStatus == nil {
@@ -206,8 +206,8 @@ func (fc *FeController) ClearResources(ctx context.Context, src *v1alpha12.StarR
 	return false, nil
 }
 
-//getSearchService get the domain service name, the domain service for statefulset.
-//domain service have PublishNotReadyAddresses. while used PublishNotReadyAddresses, the fe start need all instance domain can resolve.
+// getSearchService get the domain service name, the domain service for statefulset.
+// domain service have PublishNotReadyAddresses. while used PublishNotReadyAddresses, the fe start need all instance domain can resolve.
 func (fc *FeController) getSearchService() string {
 	return "fe-domain-search"
 }

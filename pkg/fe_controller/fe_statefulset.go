@@ -42,7 +42,7 @@ func feStatefulSetName(src *v1alpha12.StarRocksCluster) string {
 	return stname
 }
 
-//buildStatefulSetParams generate the params of construct the statefulset.
+// buildStatefulSetParams generate the params of construct the statefulset.
 func (fc *FeController) buildStatefulSetParams(src *v1alpha12.StarRocksCluster, feconfig map[string]interface{}) rutils.StatefulSetParams {
 	feSpec := src.Spec.StarRocksFeSpec
 	var pvcs []corev1.PersistentVolumeClaim

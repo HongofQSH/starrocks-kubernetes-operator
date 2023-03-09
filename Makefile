@@ -1,5 +1,7 @@
 
 # Image URL to use all building/pushing image targets
+IMG ?= starrocks/operator:v1.3
+
 # ENVTEST_K8S_VERSION refers to the version of kubebuilder assets to be downloaded by envtest binary.
 ENVTEST_K8S_VERSION = 1.23
 
@@ -99,6 +101,7 @@ run: manifests generate fmt vet ## Run a controller from your host.
 .PHONY: docker
 docker: build
 	docker build --rm --no-cache -f Dockerfile -t "$(IMG)"  .
+
 
 .PHONY: push
 push: docker

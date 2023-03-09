@@ -17,7 +17,7 @@ const (
 	CnService = "cn"
 )
 
-//HashService service hash components
+// HashService service hash components
 type hashService struct {
 	name      string
 	namespace string
@@ -28,7 +28,7 @@ type hashService struct {
 	labels map[string]string
 }
 
-//BuildExternalService build the external service.
+// BuildExternalService build the external service.
 func BuildExternalService(src *v1alpha12.StarRocksCluster, name string, serviceType StarRocksServiceType, config map[string]interface{}) corev1.Service {
 	var srPorts []v1alpha12.StarRocksServicePort
 	//the k8s service type.
@@ -170,7 +170,7 @@ func serviceHashObject(svc *corev1.Service) hashService {
 	}
 }
 
-//GenerateServiceLabels generate the default labels list starrocks services.
+// GenerateServiceLabels generate the default labels list starrocks services.
 func GenerateServiceLabels(src *v1alpha12.StarRocksCluster, serviceType StarRocksServiceType) Labels {
 	labels := Labels{}
 	labels.AddLabel(src.Labels)

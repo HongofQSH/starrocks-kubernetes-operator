@@ -237,19 +237,23 @@ spec:
         runAsNonRoot: false
       containers:
       - command:
-        - /sroperator
+        - /start.sh
         args:
         - --leader-elect
         image: starrocks/operator:v1.3
         name: sroperator
         securityContext:
-          allowPrivilegeEscalation: false
+          allowPrivilegeEscalation: true
+          capabilities:
+            add:
+              - "SYS_PTRACE"          
         livenessProbe:
           httpGet:
             path: /healthz
             port: 8081
           initialDelaySeconds: 15
           periodSeconds: 20
+          failureThreshold: 100000
         readinessProbe:
           httpGet:
             path: /readyz

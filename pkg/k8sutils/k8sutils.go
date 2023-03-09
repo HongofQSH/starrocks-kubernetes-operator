@@ -113,7 +113,7 @@ func PodIsReady(status *corev1.PodStatus) bool {
 	return true
 }
 
-//GetConfigMap get the configmap name=name, namespace=namespace.
+// GetConfigMap get the configmap name=name, namespace=namespace.
 func GetConfigMap(ctx context.Context, k8scient client.Client, namespace, name string) (*corev1.ConfigMap, error) {
 	var configMap corev1.ConfigMap
 	if err := k8scient.Get(ctx, types.NamespacedName{Namespace: namespace, Name: name}, &configMap); err != nil {

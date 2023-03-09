@@ -1,0 +1,23 @@
+apiVersion: starrocks.com/v1alpha1
+kind: StarRocksCluster
+metadata:
+  name: starrockscluster-sample
+  namespace: starrocks
+spec:
+  starRocksFeSpec:
+    image: starrocks/alpine-fe:2.4.1
+    replicas: 2
+    requests:
+      cpu: 2
+      memory: 6Gi
+    storageVolumes:
+      - name: fe-meta
+        storageClassName: nfs-storage
+        storageSize: 3Gi
+        mountPath: /opt/starrocks/fe/meta # overwrite the default meta path      
+  starRocksBeSpec:
+    image: starrocks/centos-be:2.4.1
+    replicas: 1
+    requests:
+      cpu: 2
+      memory: 6Gi

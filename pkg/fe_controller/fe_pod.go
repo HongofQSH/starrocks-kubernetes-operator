@@ -36,7 +36,7 @@ const (
 	env_fe_config_path = "CONFIGMAP_MOUNT_PATH"
 )
 
-//fePodLabels generate the fe pod labels and statefulset selector
+// fePodLabels generate the fe pod labels and statefulset selector
 func fePodLabels(src *v1alpha12.StarRocksCluster, ownerReferenceName string) rutils.Labels {
 	labels := rutils.Labels{}
 	labels[v1alpha12.OwnerReference] = ownerReferenceName
@@ -45,7 +45,7 @@ func fePodLabels(src *v1alpha12.StarRocksCluster, ownerReferenceName string) rut
 	return labels
 }
 
-//buildPodTemplate construct the podTemplate for deploy fe.
+// buildPodTemplate construct the podTemplate for deploy fe.
 func (fc *FeController) buildPodTemplate(src *v1alpha12.StarRocksCluster, feconfig map[string]interface{}) corev1.PodTemplateSpec {
 	metaname := src.Name + "-" + v1alpha12.DEFAULT_FE
 	feSpec := src.Spec.StarRocksFeSpec
@@ -156,11 +156,21 @@ func (fc *FeController) buildPodTemplate(src *v1alpha12.StarRocksCluster, feconf
 	}
 
 	Envs = append(Envs, feSpec.FeEnvVars...)
+	//hong. Change the starting script of FE
+	var command = []string{
+		"/bin/bash",
+		"-c",
+		"if [ -f \"/opt/starrocks/fe/meta/image/ROLE\" ]; then /opt/starrocks/fe/bin/start_fe.sh; else /opt/starrocks/fe_entrypoint.sh starrockscluster-sample-fe-service.starrocks; fi",
+	}
 	feContainer := corev1.Container{
-		Name:    v1alpha12.DEFAULT_FE,
-		Image:   feSpec.Image,
-		Command: []string{"/opt/starrocks/fe_entrypoint.sh"},
-		Args:    []string{"$(FE_SERVICE_NAME)"},
+		Name:  v1alpha12.DEFAULT_FE,
+		Image: feSpec.Image,
+		//Command: []string{"/opt/starrocks/fe_entrypoint.sh"},
+		//Args:    []string{"$(FE_SERVICE_NAME)"},
+		//Command: []string{"/bin/bash", "-c", "while :; do sleep 10; done"},
+		Command: command,
+		Args:    []string{""},
+
 		Ports: []corev1.ContainerPort{{
 			Name:          "http-port",
 			ContainerPort: rutils.GetPort(feconfig, rutils.HTTP_PORT),
